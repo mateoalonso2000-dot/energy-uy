@@ -30,14 +30,14 @@ from src.dashboard.components.charts_tab import render_charts_tab
 from src.dashboard.components.linkedin_panel import render_linkedin_tab
 from src.dashboard.health_check import run_health_check
 
-_LOGO_PATH = ROOT / "assets" / "logo_aic.jpg"
+_LOGO_PATH = ROOT / "assets" / "logo_aic.png"
 
 
 @st.cache_data(show_spinner=False)
 def _load_logo() -> str:
     """Carga el logo AIC como data URI base64. Cacheado para toda la sesión."""
     data = _LOGO_PATH.read_bytes()
-    return f"data:image/jpeg;base64,{base64.b64encode(data).decode()}"
+    return f"data:image/png;base64,{base64.b64encode(data).decode()}"
 
 
 # ── Configuración de página ───────────────────────────────────────────────────

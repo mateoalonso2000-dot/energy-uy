@@ -159,7 +159,6 @@ html, body, [class*="css"], .stMarkdown, .stText {
     height: auto;
     display: block;
     margin-bottom: 10px;
-    mix-blend-mode: multiply;
 }
 .aic-logo .logo-product {
     font-size: 12px;
