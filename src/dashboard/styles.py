@@ -114,11 +114,25 @@ html, body, [class*="css"], .stMarkdown, .stText {
 .main-header {
     background: linear-gradient(135deg, #1D3461 0%, #2C4A7C 100%);
     border-radius: 10px;
-    padding: 22px 28px;
+    padding: 18px 24px;
     margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.header-logo {
+    height: 48px;
+    width: auto;
+    background: #FFFFFF;
+    border-radius: 7px;
+    padding: 5px 12px;
+    flex-shrink: 0;
+    display: block;
 }
 .main-header h1 {
     font-size: 20px !important;
@@ -153,31 +167,21 @@ html, body, [class*="css"], .stMarkdown, .stText {
     border-bottom: 1px solid rgba(255,255,255,0.15);
     margin-bottom: 22px;
 }
-.aic-logo .logo-wordmark {
-    font-size: 22px;
-    font-weight: 800;
-    color: #FFFFFF;
-    letter-spacing: -0.01em;
-    line-height: 1;
-    font-family: 'Inter', sans-serif;
-}
-.aic-logo .logo-wordmark .green {
-    color: #27AE60;
-}
-.aic-logo .logo-tagline {
-    font-size: 9px;
-    letter-spacing: 0.20em;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    margin-top: 3px;
-    font-family: 'Inter', sans-serif;
+.sidebar-logo-img {
+    width: 100%;
+    max-width: 175px;
+    height: auto;
+    border-radius: 7px;
+    display: block;
+    margin-bottom: 10px;
 }
 .aic-logo .logo-product {
     font-size: 12px;
     color: rgba(255,255,255,0.75);
-    margin-top: 8px;
+    margin-top: 2px;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
+    letter-spacing: 0.03em;
 }
 
 /* ── Status indicator ────────────────────────────────────────── */

@@ -6,6 +6,7 @@ Uso:
     streamlit run app.py
 """
 
+import base64
 import calendar
 import sys
 from datetime import date
@@ -29,6 +30,15 @@ from src.dashboard.components.charts_tab import render_charts_tab
 from src.dashboard.components.linkedin_panel import render_linkedin_tab
 from src.dashboard.health_check import run_health_check
 
+_LOGO_PATH = ROOT / "assets" / "logo_aic.jpg"
+
+
+@st.cache_data(show_spinner=False)
+def _load_logo() -> str:
+    """Carga el logo AIC como data URI base64. Cacheado para toda la sesión."""
+    data = _LOGO_PATH.read_bytes()
+    return f"data:image/jpeg;base64,{base64.b64encode(data).decode()}"
+
 
 # ── Configuración de página ───────────────────────────────────────────────────
 st.set_page_config(
@@ -43,14 +53,16 @@ st.markdown(AIC_CSS, unsafe_allow_html=True)
 # ── Health check (conectividad) ───────────────────────────────────────────────
 run_health_check()
 
+# Cargar logo una vez (cacheado) — se usa en sidebar y en el header principal
+logo_uri = _load_logo()
+
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
 
     # Logo AIC
-    st.markdown("""
+    st.markdown(f"""
     <div class="aic-logo">
-        <div class="logo-wordmark">&#9644; <span class="green">AIC</span></div>
-        <div class="logo-tagline">Economía &amp; Finanzas</div>
+        <img src="{logo_uri}" class="sidebar-logo-img" alt="AIC Economía &amp; Finanzas" />
         <div class="logo-product">Sistema Eléctrico Uruguay</div>
     </div>
     """, unsafe_allow_html=True)
@@ -150,9 +162,12 @@ period_str = (
 
 st.markdown(f"""
 <div class="main-header">
-    <div>
-        <h1>Sistema Eléctrico Uruguayo</h1>
-        <div class="header-sub">AIC Economía &amp; Finanzas &nbsp;·&nbsp; Fuente: ADME / UTE</div>
+    <div class="header-left">
+        <img src="{logo_uri}" class="header-logo" alt="AIC" />
+        <div>
+            <h1>Sistema Eléctrico Uruguayo</h1>
+            <div class="header-sub">Fuente: ADME / UTE</div>
+        </div>
     </div>
     <div class="period-badge">{period_str}</div>
 </div>
