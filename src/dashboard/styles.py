@@ -159,7 +159,7 @@ html, body, [class*="css"], .stMarkdown, .stText {
     height: auto;
     display: block;
     margin-bottom: 10px;
-    background: rgba(255,255,255,0.12);
+    background: #FFFFFF;
     border-radius: 6px;
     padding: 5px 8px;
     box-sizing: border-box;
