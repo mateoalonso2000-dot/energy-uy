@@ -162,12 +162,9 @@ period_str = (
 
 st.markdown(f"""
 <div class="main-header">
-    <div class="header-left">
-        <img src="{logo_uri}" class="header-logo" alt="AIC" />
-        <div>
-            <h1>Sistema Eléctrico Uruguayo</h1>
-            <div class="header-sub">Fuente: ADME / UTE</div>
-        </div>
+    <div>
+        <h1>Sistema Eléctrico Uruguayo</h1>
+        <div class="header-sub">Fuente: ADME / UTE</div>
     </div>
     <div class="period-badge">{period_str}</div>
 </div>

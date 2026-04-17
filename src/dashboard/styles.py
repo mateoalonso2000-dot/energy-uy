@@ -120,20 +120,6 @@ html, body, [class*="css"], .stMarkdown, .stText {
     justify-content: space-between;
     align-items: center;
 }
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-}
-.header-logo {
-    height: 48px;
-    width: auto;
-    background: #FFFFFF;
-    border-radius: 7px;
-    padding: 5px 12px;
-    flex-shrink: 0;
-    display: block;
-}
 .main-header h1 {
     font-size: 20px !important;
     font-weight: 700 !important;
@@ -171,7 +157,6 @@ html, body, [class*="css"], .stMarkdown, .stText {
     width: 100%;
     max-width: 175px;
     height: auto;
-    border-radius: 7px;
     display: block;
     margin-bottom: 10px;
 }
