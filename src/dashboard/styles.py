@@ -262,27 +262,34 @@ html, body, [class*="css"], .stMarkdown, .stText {
     border-bottom: 2px solid #27AE60 !important;
 }
 
-/* ── Botón colapsar/expandir sidebar ─────────────────────────── */
-[data-testid="collapsedControl"],
-[data-testid="stSidebarCollapsedControl"],
-button[aria-label="Open sidebar"],
-button[aria-label="Abrir barra lateral"],
-section[data-testid="stSidebarContent"] ~ div > button {
-    background-color: #CBD5E1 !important;
+/* ── Botón expandir sidebar (visible cuando sidebar está cerrado) ── */
+[data-testid="stExpandSidebarButton"] {
+    background-color: #94A3B8 !important;
     border-radius: 0 6px 6px 0 !important;
-    box-shadow: 2px 0 6px rgba(0,0,0,0.12) !important;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2) !important;
     opacity: 1 !important;
     visibility: visible !important;
 }
-[data-testid="collapsedControl"]:hover,
-[data-testid="stSidebarCollapsedControl"]:hover,
-button[aria-label="Open sidebar"]:hover {
+[data-testid="stExpandSidebarButton"] button {
     background-color: #94A3B8 !important;
+    opacity: 1 !important;
 }
-[data-testid="collapsedControl"] svg,
-[data-testid="stSidebarCollapsedControl"] svg {
-    color: #1D3461 !important;
-    fill: #1D3461 !important;
+[data-testid="stExpandSidebarButton"] svg {
+    color: #FFFFFF !important;
+    fill: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+[data-testid="stExpandSidebarButton"]:hover,
+[data-testid="stExpandSidebarButton"] button:hover {
+    background-color: #64748B !important;
+}
+
+/* ── Botón colapsar sidebar (visible cuando sidebar está abierto) ── */
+[data-testid="stSidebarCollapseButton"] button {
+    color: rgba(255,255,255,0.7) !important;
+}
+[data-testid="stSidebarCollapseButton"] svg {
+    fill: rgba(255,255,255,0.7) !important;
 }
 
 /* ── Ocultar branding Streamlit ──────────────────────────────── */
