@@ -154,14 +154,14 @@ html, body, [class*="css"], .stMarkdown, .stText {
     margin-bottom: 22px;
 }
 .sidebar-logo-img {
-    width: 100%;
-    max-width: 175px;
+    width: auto;
+    max-width: 140px;
     height: auto;
     display: block;
     margin-bottom: 10px;
-    background: #FFFFFF;
-    border-radius: 8px;
-    padding: 8px 12px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 5px 8px;
     box-sizing: border-box;
 }
 .aic-logo .logo-product {
