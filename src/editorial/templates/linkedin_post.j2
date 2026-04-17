@@ -1,0 +1,22 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REPORTE DEL SISTEMA ELÉCTRICO URUGUAYO — {{ period_label | upper }}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+BORRADOR DE COPY PARA LINKEDIN
+───────────────────────────────
+{{ linkedin_copy }}
+
+
+─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+DATOS CRUDOS (para verificar)
+─────────────────────────────
+{% for bullet in bullets %}
+• {{ bullet }}
+{% endfor %}
+
+───────────────────────────────────────────────────────
+Período:         {{ period_label }}
+Fuente de datos: ADME (Administración del Mercado Eléctrico) / UTE
+Generado:        {{ generated_at }}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

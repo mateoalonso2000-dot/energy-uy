@@ -1,0 +1,35 @@
+# ─── Secretos y entorno ───────────────────────────────────────────────────────
+.env
+*.env
+.streamlit/secrets.toml
+
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ─── Base de datos (nunca versionar la DB local) ──────────────────────────────
+data/db/*.sqlite
+data/db/*.sqlite3
+data/db/*.db
+
+# ─── Salidas generadas en runtime ─────────────────────────────────────────────
+outputs/charts/
+outputs/reports/
+
+# ─── Sistema operativo ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── IDEs ─────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
