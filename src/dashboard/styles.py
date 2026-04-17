@@ -17,7 +17,7 @@ html, body, [class*="css"], .stMarkdown, .stText {
 
 /* ── Sidebar navy ────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
-    background-color: #4A72B0 !important;
+    background-color: #1D3461 !important;
 }
 [data-testid="stSidebar"] p,
 [data-testid="stSidebar"] span,
@@ -32,8 +32,8 @@ html, body, [class*="css"], .stMarkdown, .stText {
     font-weight: 500;
 }
 [data-testid="stSidebar"] [data-baseweb="select"] > div {
-    background-color: #3A5F9A !important;
-    border-color: #5A82C4 !important;
+    background-color: #253F73 !important;
+    border-color: #3A5A96 !important;
     color: #FFFFFF !important;
 }
 [data-testid="stSidebar"] [data-baseweb="select"] span {
@@ -159,6 +159,10 @@ html, body, [class*="css"], .stMarkdown, .stText {
     height: auto;
     display: block;
     margin-bottom: 10px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-sizing: border-box;
 }
 .aic-logo .logo-product {
     font-size: 12px;
