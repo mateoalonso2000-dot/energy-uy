@@ -62,7 +62,9 @@ with st.sidebar:
     # Logo AIC
     st.markdown(f"""
     <div class="aic-logo">
-        <img src="{logo_uri}" class="sidebar-logo-img" alt="AIC Economía &amp; Finanzas" />
+        <div class="aic-logo-card">
+            <img src="{logo_uri}" class="sidebar-logo-img" alt="AIC Economía &amp; Finanzas" />
+        </div>
         <div class="logo-product">Sistema Eléctrico Uruguay</div>
     </div>
     """, unsafe_allow_html=True)

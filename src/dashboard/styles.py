@@ -153,17 +153,20 @@ html, body, [class*="css"], .stMarkdown, .stText {
     border-bottom: 1px solid rgba(255,255,255,0.15);
     margin-bottom: 22px;
 }
+.aic-logo-card {
+    display: inline-block;
+    background: #FFFFFF;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-bottom: 10px;
+    line-height: 0;
+}
 .sidebar-logo-img {
-    width: auto;
-    max-width: 120px;
-    height: 36px;
-    object-fit: contain;
+    width: 100%;
+    max-width: 160px;
+    height: auto;
     display: block;
     margin-bottom: 10px;
-    background: #FFFFFF;
-    border-radius: 5px;
-    padding: 3px 6px;
-    box-sizing: border-box;
 }
 .aic-logo .logo-product {
     font-size: 12px;
