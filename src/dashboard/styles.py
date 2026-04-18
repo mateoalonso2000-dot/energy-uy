@@ -157,9 +157,10 @@ html, body, [class*="css"], .stMarkdown, .stText {
     display: inline-block;
     background: #FFFFFF;
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 0;
     margin-bottom: 10px;
     line-height: 0;
+    overflow: hidden;
 }
 .sidebar-logo-img {
     width: 100%;
