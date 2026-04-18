@@ -19,8 +19,6 @@ dependencies = [
     "python-dotenv>=1.0",
     "streamlit>=1.35",
     "plotly>=5.18",
-    "matplotlib>=3.8",
-    "pillow>=10.0",
 ]
 
 [project.optional-dependencies]

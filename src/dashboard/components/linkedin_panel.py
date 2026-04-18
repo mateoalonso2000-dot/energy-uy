@@ -8,7 +8,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from src.dashboard.pipeline_runner import PipelineResult
-from src.visualization.editorial_export import export_mix_generacion
 
 
 def render_linkedin_tab(result: PipelineResult) -> None:
@@ -103,34 +102,4 @@ def render_linkedin_tab(result: PipelineResult) -> None:
             f"<p style='font-size:11px; color:#94A3B8;'>Fuente: ADME / UTE<br>"
             f"Período: {result.period_label}</p>",
             unsafe_allow_html=True,
-        )
-
-    # ── Exportación editorial ─────────────────────────────────────────────────
-    st.markdown("---")
-    st.markdown('<div class="section-label">Exportar imagen para LinkedIn</div>', unsafe_allow_html=True)
-
-    if st.button("📥 Generar imagen editorial", type="primary"):
-        with st.spinner("Generando imagen..."):
-            try:
-                png_bytes = export_mix_generacion(
-                    df=result.df_gen,
-                    periodo_label=result.period_label,
-                )
-                st.session_state["editorial_png"] = png_bytes
-            except Exception as exc:
-                st.error(f"No se pudo generar la imagen: {exc}")
-
-    if "editorial_png" in st.session_state:
-        st.image(st.session_state["editorial_png"], use_container_width=True)
-
-        filename = (
-            "mix_generacion_aic_"
-            + result.period_label.replace(" ", "_").lower()
-            + ".png"
-        )
-        st.download_button(
-            label="⬇️ Descargar PNG",
-            data=st.session_state["editorial_png"],
-            file_name=filename,
-            mime="image/png",
         )
