@@ -9,7 +9,7 @@ Uso:
 import base64
 import calendar
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 import streamlit as st
@@ -111,12 +111,12 @@ with st.sidebar:
 
     run_clicked = st.button("▶  Ejecutar pipeline", type="primary")
 
-    # Estado de última ejecución
-    if "last_run_label" in st.session_state:
+    # Fecha y hora de última ejecución
+    if "last_run_datetime" in st.session_state:
         st.markdown(
             f'<div class="run-status">'
             f'<div class="status-dot"></div>'
-            f'Últ. ejecución: {st.session_state.last_run_label}'
+            f'Última actualización: {st.session_state.last_run_datetime}'
             f'</div>',
             unsafe_allow_html=True,
         )
@@ -138,8 +138,14 @@ if run_clicked:
         )
 
     progress_bar.empty()
-    st.session_state.result          = result
-    st.session_state.last_run_label  = f"{MONTHS_ES[month].capitalize()} {year}"
+    _now = datetime.now()
+    _meses_abrev = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]
+    st.session_state.result           = result
+    st.session_state.last_run_label   = f"{MONTHS_ES[month].capitalize()} {year}"
+    st.session_state.last_run_datetime = (
+        f"{_now.day} {_meses_abrev[_now.month - 1]} {_now.year}, "
+        f"{_now.hour:02d}:{_now.minute:02d}"
+    )
 
     if result.errors:
         for err in result.errors:

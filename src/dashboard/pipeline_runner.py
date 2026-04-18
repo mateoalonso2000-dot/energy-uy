@@ -6,6 +6,7 @@ visualización → editorial y retorna un PipelineResult con todo lo necesario
 para renderizar el dashboard.
 """
 
+import calendar as _calendar
 import logging
 import sys
 import time
@@ -82,6 +83,7 @@ class PipelineResult:
     top_source: str            = ""
     top_source_pct: float      = 0.0
     avg_price_usd: Optional[float] = None
+    prev_avg_price_usd: Optional[float] = None
     # Gráficos (Figure objects de matplotlib)
     charts: dict               = field(default_factory=dict)
     # Editorial
@@ -148,6 +150,24 @@ def run_pipeline(
     if not result.df_price.empty:
         price_col            = "price_usd" if "price_usd" in result.df_price.columns else "price_uyu"
         result.avg_price_usd = round(result.df_price[price_col].mean(), 2)
+
+        # Precio del mes anterior para variación intermensal
+        _pm = date_from.month - 1 if date_from.month > 1 else 12
+        _py = date_from.year if date_from.month > 1 else date_from.year - 1
+        _prev_price_from = date(_py, _pm, 1)
+        _prev_price_to   = date(_py, _pm, _calendar.monthrange(_py, _pm)[1])
+        try:
+            df_prev_price = query_spot_price(
+                engine,
+                _prev_price_from.isoformat(),
+                _prev_price_to.isoformat(),
+                granularity="daily",
+            )
+            if not df_prev_price.empty:
+                _pc = "price_usd" if "price_usd" in df_prev_price.columns else "price_uyu"
+                result.prev_avg_price_usd = round(df_prev_price[_pc].mean(), 2)
+        except Exception:
+            pass
 
     # ── D. Gráficos ───────────────────────────────────────────────────────────
     progress("Generando gráficos...", 0.72)
@@ -249,7 +269,7 @@ def _build_charts(engine, date_from, date_to, label, result):
             df_yoy = df_monthly
 
         result.charts["bar"] = chart_renewables_vs_nonrenewables(
-            df_monthly,
+            result.df_gen,
             title="Renovable vs. no renovable",
             subtitle=label, date_label=f"Período: {label}", source_label=src,
         )

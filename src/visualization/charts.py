@@ -184,10 +184,11 @@ def chart_generation_area(
             tickformat="%d %b", hoverformat="%d %b %Y",
         ),
         yaxis=dict(gridcolor=GRID, linecolor=GRID, title="GWh", tickfont=dict(size=10)),
-        margin=dict(l=48, r=16, t=56, b=72),
+        margin=dict(l=48, r=120, t=56, b=48),
         legend=dict(
-            orientation="h", yanchor="bottom", y=-0.30,
-            xanchor="center", x=0.5, font=dict(size=10),
+            orientation="v", x=1.02, y=0.5,
+            yanchor="middle", xanchor="left",
+            font=dict(size=10, family="Inter, sans-serif"),
         ),
         hoverlabel=_HOVER,
         hovermode="x unified",
@@ -206,11 +207,13 @@ def chart_renewables_vs_nonrenewables(
     date_label: str = "",
     source_label: str = "Fuente: ADME / UTE",
 ) -> go.Figure:
-    """Barras apiladas mensuales: renovable vs. no renovable."""
+    """Barras apiladas diarias: renovable vs. no renovable."""
     df = df.copy()
+    df["date"] = pd.to_datetime(df["date"])
+
     df_grouped = (
         df[df["source_type"].isin(["renewable", "non_renewable"])]
-        .groupby(["year_month", "source_type"])["value_mwh"]
+        .groupby(["date", "source_type"])["value_mwh"]
         .sum()
         .unstack(fill_value=0)
         .reset_index()
@@ -219,21 +222,21 @@ def chart_renewables_vs_nonrenewables(
     fig = go.Figure()
     if "renewable" in df_grouped.columns:
         fig.add_trace(go.Bar(
-            x=df_grouped["year_month"],
+            x=df_grouped["date"],
             y=df_grouped["renewable"] / 1000,
             name="Renovable",
             marker_color=GREEN,
             opacity=0.92,
-            hovertemplate="<b>Renovable</b><br>%{x}<br>%{y:.0f} GWh<extra></extra>",
+            hovertemplate="<b>Renovable</b><br>%{x|%d %b}<br>%{y:.1f} GWh<extra></extra>",
         ))
     if "non_renewable" in df_grouped.columns:
         fig.add_trace(go.Bar(
-            x=df_grouped["year_month"],
+            x=df_grouped["date"],
             y=df_grouped["non_renewable"] / 1000,
             name="No renovable",
             marker_color="#E74C3C",
             opacity=0.88,
-            hovertemplate="<b>No renovable</b><br>%{x}<br>%{y:.0f} GWh<extra></extra>",
+            hovertemplate="<b>No renovable</b><br>%{x|%d %b}<br>%{y:.1f} GWh<extra></extra>",
         ))
 
     fig.update_layout(
@@ -241,7 +244,10 @@ def chart_renewables_vs_nonrenewables(
         title=dict(text=title, font=dict(size=15, color=NAVY, family="Inter, sans-serif"), x=0),
         paper_bgcolor="white",
         plot_bgcolor="white",
-        xaxis=dict(gridcolor=GRID, linecolor=GRID, tickfont=dict(size=10)),
+        xaxis=dict(
+            gridcolor=GRID, linecolor=GRID, tickfont=dict(size=10),
+            tickformat="%d %b", hoverformat="%d %b %Y",
+        ),
         yaxis=dict(gridcolor=GRID, linecolor=GRID, title="GWh", tickfont=dict(size=10)),
         margin=dict(l=48, r=16, t=56, b=72),
         legend=dict(
@@ -286,6 +292,7 @@ def chart_yoy_comparison(
     curr = df_agg[df_agg["year"] == year_current].set_index("month")["value_mwh"]
     prev = df_agg[df_agg["year"] == year_previous].set_index("month")["value_mwh"]
     x    = [m_labels.get(m, m) for m in months]
+    prev_has_data = not prev.empty and prev.sum() > 0
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
@@ -296,14 +303,27 @@ def chart_yoy_comparison(
         opacity=0.92,
         hovertemplate=f"<b>{year_current}</b><br>%{{x}}<br>%{{y:.0f}} GWh<extra></extra>",
     ))
-    fig.add_trace(go.Bar(
-        x=x,
-        y=[prev.get(m, 0) / 1000 for m in months],
-        name=str(year_previous),
-        marker_color=GREEN,
-        opacity=0.65,
-        hovertemplate=f"<b>{year_previous}</b><br>%{{x}}<br>%{{y:.0f}} GWh<extra></extra>",
-    ))
+    if prev_has_data:
+        fig.add_trace(go.Bar(
+            x=x,
+            y=[prev.get(m, 0) / 1000 for m in months],
+            name=str(year_previous),
+            marker_color=SUBTEXT,
+            opacity=0.75,
+            hovertemplate=f"<b>{year_previous}</b><br>%{{x}}<br>%{{y:.0f}} GWh<extra></extra>",
+        ))
+    else:
+        fig.add_annotation(
+            text=f"Sin datos disponibles para {year_previous}",
+            x=0.5, y=0.5, xref="paper", yref="paper",
+            showarrow=False,
+            font=dict(size=12, color=SUBTEXT, family="Inter, sans-serif"),
+            xanchor="center", yanchor="middle",
+            bgcolor="rgba(248,250,252,0.85)",
+            bordercolor=GRID,
+            borderwidth=1,
+            borderpad=8,
+        )
 
     fig.update_layout(
         barmode="group",

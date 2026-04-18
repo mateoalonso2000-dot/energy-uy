@@ -95,7 +95,7 @@ def _build_title(findings: PeriodFindings) -> str:
     if findings.renewable_text:
         return f"Las renovables sostienen la matriz eléctrica de Uruguay en {findings.period_label}"
 
-    return f"Informe del sistema eléctrico uruguayo — {findings.period_label}"
+    return f"Informe del sistema eléctrico uruguayo. {findings.period_label}"
 
 
 def _build_interpretation(findings: PeriodFindings) -> str:
@@ -111,8 +111,8 @@ def _build_interpretation(findings: PeriodFindings) -> str:
     # Contexto basado en nivel de penetración renovable
     if pct >= 99:
         context = (
-            f"Uruguay alcanza cobertura renovable prácticamente total en {findings.period_label} — "
-            "un nivel excepcional a escala global que la región tardó décadas en construir."
+            f"Uruguay alcanza cobertura renovable prácticamente total en {findings.period_label},"
+            " un nivel excepcional a escala global que la región tardó décadas en construir."
         )
     elif pct >= 90:
         context = (
@@ -122,8 +122,8 @@ def _build_interpretation(findings: PeriodFindings) -> str:
     elif pct >= 70:
         context = (
             f"El {pct:.0f}% de penetración renovable refleja la apuesta estructural "
-            "de Uruguay por recursos autóctonos — viento, agua y biomasa — "
-            "reduciendo su exposición a los precios de combustibles."
+            "de Uruguay por recursos autóctonos (viento, agua y biomasa),"
+            " reduciendo su exposición a los precios de combustibles."
         )
     elif pct >= 50:
         context = (
@@ -167,10 +167,13 @@ def _build_copy(findings: PeriodFindings, title: str, interpretation: str) -> st
         [línea en blanco]
         Bullets con ▸
         [línea en blanco]
-        Frase de contexto (interpretation — distinta a los bullets)
+        Frase de contexto (distinta a los bullets)
         [línea en blanco]
         Atribución de datos
         Hashtags
+
+    Regla de estilo: no usar em dash (—). Es una señal de texto generado por IA.
+    Usar coma, punto, dos puntos o paréntesis como alternativa.
     """
     lines = []
 

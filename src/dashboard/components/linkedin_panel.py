@@ -2,7 +2,10 @@
 linkedin_panel.py — Tab de contenido editorial para LinkedIn.
 """
 
+import json
+
 import streamlit as st
+import streamlit.components.v1 as components
 
 from src.dashboard.pipeline_runner import PipelineResult
 
@@ -26,16 +29,60 @@ def render_linkedin_tab(result: PipelineResult) -> None:
     col_edit, col_info = st.columns([3, 1], gap="large")
 
     with col_edit:
+        line_count     = result.linkedin_copy.count("\n") + 1
+        dynamic_height = max(280, min(520, line_count * 22))
+
         edited = st.text_area(
             label="copy",
             value=result.linkedin_copy,
-            height=420,
+            height=dynamic_height,
             label_visibility="collapsed",
             help="Editá el copy antes de publicarlo. Los cambios no se guardan automáticamente.",
         )
 
-        # Instrucción para copiar (la clipboard API no está disponible en Streamlit nativo)
-        st.caption("Seleccioná todo el texto (Ctrl+A dentro del campo) y copiá con Ctrl+C.")
+        # Botón copiar al portapapeles via JS
+        text_json = json.dumps(edited)
+        components.html(f"""
+        <style>
+        #copy-btn {{
+            background: #27AE60;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 18px;
+            font-size: 14px;
+            font-family: Inter, sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.15s;
+        }}
+        #copy-btn:hover {{ background: #219A52; }}
+        #copy-btn.copied {{ background: #1D3461; }}
+        </style>
+        <button id="copy-btn" onclick="copyPost()">📋 Copiar post</button>
+        <script>
+        function copyPost() {{
+            var text = {text_json};
+            var el = document.createElement('textarea');
+            el.value = text;
+            el.style.position = 'fixed';
+            el.style.opacity = '0';
+            document.body.appendChild(el);
+            el.focus();
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            var btn = document.getElementById('copy-btn');
+            btn.textContent = '✓ ¡Post copiado!';
+            btn.classList.add('copied');
+            setTimeout(function() {{
+                btn.textContent = '📋 Copiar post';
+                btn.classList.remove('copied');
+            }}, 2000);
+        }}
+        </script>
+        """, height=52)
 
     with col_info:
         st.markdown('<div class="section-label">Datos de respaldo</div>', unsafe_allow_html=True)
